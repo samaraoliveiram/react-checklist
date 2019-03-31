@@ -1,0 +1,14 @@
+{
+  "name": "ionic-checklist",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/samaraoliveiram/ionic-checklist",
+  "author": "Samara Motta",
+  "license": "MIT",
+  "private": true,
+  "workspaces": ["client", "server"],
+  "scripts": {
+    "client:start": "yarn workspace client start",
+    "server:start": "yarn workspace server start"
+  }
+}
