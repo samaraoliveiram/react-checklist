@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 export default function withAuth(ComponentToProtect) {
   return class extends Component {
@@ -8,11 +7,11 @@ export default function withAuth(ComponentToProtect) {
       super();
       this.state = {
         loading: true,
-        redirect: false,
+        redirect: false
       };
     }
     componentDidMount() {
-      fetch('/checkToken')
+      fetch("/checkToken")
         .then(res => {
           if (res.status === 200) {
             this.setState({ loading: false });
@@ -40,5 +39,5 @@ export default function withAuth(ComponentToProtect) {
         </React.Fragment>
       );
     }
-  }
+  };
 }

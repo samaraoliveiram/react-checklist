@@ -1,12 +1,11 @@
 require("dotenv").config();
-import { Router, Response , Request} from "express";
-import * as mongoose from "mongoose";
+import { Router, Response, Request } from "express";
+import mongoose from "mongoose";
 import { hash as _hash } from "bcrypt";
 import User from "../models/User";
-import * as bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import withAuth from "../auth";
-
 
 const secret = process.env.SECRET;
 
@@ -94,7 +93,10 @@ router.post("/signin", function(req, res) {
 //   response.send("Que caralhos to fazeno");
 // });
 
-router.get("/checkToken", withAuth, function(request : Request, response : Response) {
+router.get("/checkToken", withAuth, function(
+  request: Request,
+  response: Response
+) {
   response.status(200).send();
 });
 
@@ -129,7 +131,7 @@ router.get("/:id", async (request, response) => {
 router.put("/:id", async (request, response) => {
   try {
     var person = await User.findById(request.params.id).exec();
-    if(!person){
+    if (!person) {
       return false;
     }
     person.set(request.body);
