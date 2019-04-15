@@ -1,10 +1,18 @@
-import { Router } from "express";
+require("dotenv").config();
+import { Router, Response , Request} from "express";
 import * as mongoose from "mongoose";
 import { hash as _hash } from "bcrypt";
-import User from "../models/user";
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
+import User from "../models/User";
+import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
+import withAuth from "../auth";
 
+
+const secret = process.env.SECRET;
+
+if (!secret) {
+  throw new Error("Missing secret in .env");
+}
 
 const router = Router();
 
@@ -39,40 +47,55 @@ router.post("/signup", function(req, res) {
   });
 });
 
-router.post('/signin', function(req, res){
-   User.findOne({email: req.body.email})
-   .exec()
-   .then(function(user) {
-      bcrypt.compare(req.body.password, user.password, function(err, result){
-         if(err) {
-            return res.status(401).json({
-               failed: 'Unauthorized Access'
-            });
-         }
-         if(result) {
-            const JWTToken = jwt.sign({
-                 email: user.email,
-                 _id: user._id
-               },
-               'secret',
-                {
-                  expiresIn: '2h'
-                });
-                return res.status(200).json({
-                  success: 'Welcome to the JWT Auth',
-                  token: JWTToken
-                });
-           }
-         return res.status(401).json({
-            failed: 'Unauthorized Access'
-         });
+router.post("/signin", function(req, res) {
+  User.findOne({ email: req.body.email })
+    .exec()
+    .then(function(user) {
+      if (!user) {
+        return res.status(401).json({
+          failed: "Unauthorized Access"
+        });
+      }
+      bcrypt.compare(req.body.password, user.password, function(err, result) {
+        if (err) {
+          return res.status(401).json({
+            failed: "Unauthorized Access"
+          });
+        }
+        if (result) {
+          const JWTToken = jwt.sign(
+            {
+              email: user.email,
+              _id: user._id
+            },
+            secret,
+            {
+              expiresIn: "2h"
+            }
+          );
+          return res.status(200).json({
+            success: "Welcome to the JWT Auth",
+            token: JWTToken
+          });
+        }
+        return res.status(401).json({
+          failed: "Unauthorized Access"
+        });
       });
-   })
-   .catch(error => {
+    })
+    .catch(error => {
       res.status(500).json({
-         error: error
+        error: error
       });
-   });;
+    });
+});
+
+// router.get("/api/secret", withAuth, function(request : Request, response : Response) {
+//   response.send("Que caralhos to fazeno");
+// });
+
+router.get("/checkToken", withAuth, function(request : Request, response : Response) {
+  response.status(200).send();
 });
 
 router.get("/", async (request, response) => {
@@ -106,6 +129,9 @@ router.get("/:id", async (request, response) => {
 router.put("/:id", async (request, response) => {
   try {
     var person = await User.findById(request.params.id).exec();
+    if(!person){
+      return false;
+    }
     person.set(request.body);
     var result = await person.save();
     response.send(result);
