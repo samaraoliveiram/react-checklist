@@ -5,8 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { IonApp, IonPage } from "@ionic/react";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import withAuth from './components/WithAuth';
-
+import withAuth from "./components/WithAuth";
 
 class App extends Component {
   render() {

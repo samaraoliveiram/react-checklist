@@ -1,10 +1,10 @@
 require("dotenv").config();
 import { Router, Response , Request} from "express";
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 import { hash as _hash } from "bcrypt";
 import User from "../models/User";
-import * as bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import withAuth from "../auth";
 
 

@@ -13,7 +13,7 @@ mongoose.connect(
   `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_URL}/${DB_NAME}?retryWrites=true`
 )
 
-const app: express.Application = express();
+const app = express();
 app.use(BodyParser.urlencoded({ extended: true }));
 app.use(BodyParser.json());
 app.use(cookieParser());
