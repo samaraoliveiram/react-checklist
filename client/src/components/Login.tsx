@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import {} from "@ionic/react";
+import { History } from "history";
 
-interface State {
+interface LoginState {
   email: string;
   password: string;
 }
 
+interface Props {
+  history: History;
+}
 
-export default class Login extends Component<{history: any}, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
+export default class Login extends Component<Props, LoginState> {
+  state = {
+    email: "",
+    password: ""
+  };
 
   handlePasswordChange = (event: any) => {
     const { value } = event.target;
