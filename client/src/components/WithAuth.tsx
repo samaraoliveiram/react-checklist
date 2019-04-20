@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-
+//@ts-ignore
 export default function withAuth(ComponentToProtect) {
   return class extends Component {
     constructor() {
+      //@ts-ignore
       super();
       this.state = {
         loading: true,
@@ -27,6 +28,7 @@ export default function withAuth(ComponentToProtect) {
         });
     }
     render() {
+      //@ts-ignore
       const { loading, redirect } = this.state;
       if (loading) {
         return null;

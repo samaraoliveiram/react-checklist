@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {} from "@ionic/react";
+import { IonItemDivider } from "@ionic/react";
 import { History } from "history";
 
 interface LoginState {
@@ -56,26 +56,28 @@ export default class Login extends Component<Props, LoginState> {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <h1>Login Below!</h1>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter email"
-          value={this.state.email}
-          onChange={this.handleEmailChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          value={this.state.password}
-          onChange={this.handlePasswordChange}
-          required
-        />
-        <input type="submit" value="Submit" />
-      </form>
+      <div>
+        <form onSubmit={this.onSubmit}>
+          <h1>Login Below!</h1>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            value={this.state.email}
+            onChange={this.handleEmailChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+            required
+          />
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     );
   }
 }
