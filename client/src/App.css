@@ -7,4 +7,6 @@ body {
 .ion-page {
   min-height: 100vh;
   position: relative;
+  max-width: 640px;
+  margin: 0 auto;
 }

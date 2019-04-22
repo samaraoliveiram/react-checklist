@@ -5,12 +5,6 @@ import BodyParser from "body-parser";
 import user from "./routes/user";
 import cookieParser from "cookie-parser";
 
-const secret = process.env.SECRET;
-
-if (!secret) {
-  throw new Error("Missing secret in .env");
-}
-
 const { DB_URL, DB_NAME, DB_USER, DB_PASS } = process.env;
 //`mongodb+srv://${DB_USER}:${DB_PASS}@${DB_URL}/${DB_NAME}?retryWrites=true`
 

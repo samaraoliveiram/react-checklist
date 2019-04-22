@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "name": "checklist",
+  "env": {
+    "DB_URL": "@ion_cl_db_url",
+    "DB_NAME": "@ion_cl_db_name",
+    "DB_USER": "@ion_cl_db_user",
+    "DB_PASS": "@ion_cl_db_pass",
+    "SECRET": "@ion_cl_secret"
+  },
+  "builds": [
+    { "src": "server/src/index.ts", "use": "@now/node-server" },
+    {
+      "src": "client/package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "build" }
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "server/src/" },
+    {
+      "src": "/static/(.*)",
+      "headers": { "cache-control": "s-maxage=31536000,immutable" },
+      "dest": "client/static/$1"
+    },
+    { "src": "/favicon.ico", "dest": "client/favicon.ico" },
+    { "src": "/normalize.css", "dest": "client/normalize.css" },
+    { "src": "/blueprint-icons.css", "dest": "client/blueprint-icons.css" },
+    { "src": "/blueprint.css", "dest": "client/blueprint.css" },
+    { "src": "/asset-manifest.json", "dest": "client/asset-manifest.json" },
+    { "src": "/manifest.json", "dest": "client/manifest.json" },
+    { "src": "/precache-manifest.(.*)", "dest": "client/precache-manifest.$1" },
+    {
+      "src": "/service-worker.js",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "client/service-worker.js"
+    },
+    {
+      "src": "/(.*)",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "client/index.html"
+    }
+  ]
+}

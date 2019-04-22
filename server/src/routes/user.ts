@@ -1,12 +1,10 @@
 require("dotenv").config();
 import { Router, Response, Request } from "express";
 import mongoose from "mongoose";
-import { hash as _hash } from "bcrypt";
 import User from "../models/User";
-import bcrypt from "bcrypt";
+import bcrypt, { hash as _hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import withAuth from "../auth";
-import console = require("console");
 
 const secret = process.env.SECRET;
 
@@ -17,7 +15,7 @@ if (!secret) {
 const router = Router();
 
 router.post("/signup", function(req, res) {
-  _hash(req.body.password, 10, function(err, hash) {
+  _hash(req.body.password, 10, function(err: Error, hash: string) {
     if (err) {
       return res.status(500).json({
         error: err
@@ -40,7 +38,7 @@ router.post("/signup", function(req, res) {
         })
         .catch(error => {
           res.status(500).json({
-            error: err
+            error: error
           });
         });
     }
