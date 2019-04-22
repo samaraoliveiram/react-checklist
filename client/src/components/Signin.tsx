@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { IonItemDivider } from "@ionic/react";
+import React, { Component, ChangeEvent } from "react";
 import { History } from "history";
 import { FormGroup, InputGroup, Button, H1 } from "@blueprintjs/core";
 
-interface LoginState {
+interface SigninState {
   email: string;
   password: string;
 }
@@ -12,23 +11,17 @@ interface Props {
   history: History;
 }
 
-export default class Login extends Component<Props, LoginState> {
+export default class Signin extends Component<Props, SigninState> {
   state = {
     email: "",
     password: ""
   };
 
-  handlePasswordChange = (event: any) => {
-    const { value } = event.target;
+  handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = target;
     this.setState({
-      password: value
-    });
-  };
-
-  handleEmailChange = (event: any) => {
-    const { value } = event.target;
-    this.setState({
-      email: value
+      ...this.state,
+      [name]: value
     });
   };
 
@@ -42,12 +35,14 @@ export default class Login extends Component<Props, LoginState> {
       }
     })
       .then(res => {
-        if (res.status === 200) {
-          this.props.history.push("/s");
+        console.log(res);
+        if (res.status == 200) {
+          this.props.history.push("/tasks");
         } else {
           const error = new Error(res.statusText);
           throw error;
         }
+        return res;
       })
       .catch(err => {
         console.error(err);
@@ -67,7 +62,7 @@ export default class Login extends Component<Props, LoginState> {
             name="email"
             placeholder="Enter email"
             value={this.state.email}
-            onChange={this.handleEmailChange}
+            onChange={this.handleChange}
             required
             large
             intent="primary"
@@ -80,7 +75,7 @@ export default class Login extends Component<Props, LoginState> {
             name="password"
             placeholder="Enter password"
             value={this.state.password}
-            onChange={this.handlePasswordChange}
+            onChange={this.handleChange}
             required
             large
             intent="primary"

@@ -4,7 +4,8 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { IonApp, IonPage } from "@ionic/react";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
 import withAuth from "./components/WithAuth";
 import { theme, ThemeProvider } from "./components/Theme";
 
@@ -17,7 +18,8 @@ class App extends Component {
             <IonApp>
               <IonPage>
                 <Switch>
-                  <Route path="/login" component={Login} />
+                  <Route path="/signin" component={Signin} />
+                  <Route path="/signup" component={Signup} />
                   {/* <Route path="/secret" component={withAuth(Secret)} /> */}
                   <Route path="/" component={Home} />
                 </Switch>
