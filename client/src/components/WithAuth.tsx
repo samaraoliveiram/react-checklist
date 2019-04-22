@@ -1,22 +1,22 @@
-import React, { Component, ReactComponentElement, ComponentClass } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { Component, ComponentClass, SFC } from "react";
+import { Redirect } from "react-router-dom";
 
 interface State {
   loading: boolean;
   redirect: boolean;
 }
 
-export default function withAuth(ComponentToProtect : ComponentClass) {
+export default function withAuth(ComponentToProtect: ComponentClass | SFC) {
   return class extends Component<any, State> {
-    constructor(props : any) {
+    constructor(props: any) {
       super(props);
       this.state = {
         loading: true,
-        redirect: false,
+        redirect: false
       };
     }
     componentDidMount() {
-      fetch('/checkToken')
+      fetch("/api/users/checkToken")
         .then(res => {
           if (res.status === 200) {
             this.setState({ loading: false });
@@ -31,13 +31,12 @@ export default function withAuth(ComponentToProtect : ComponentClass) {
         });
     }
     render() {
-      //@ts-ignore
       const { loading, redirect } = this.state;
       if (loading) {
         return null;
       }
       if (redirect) {
-        return <Redirect to="/login" />;
+        return <Redirect to="/signin" />;
       }
       return (
         <React.Fragment>
@@ -45,5 +44,5 @@ export default function withAuth(ComponentToProtect : ComponentClass) {
         </React.Fragment>
       );
     }
-  }
+  };
 }
