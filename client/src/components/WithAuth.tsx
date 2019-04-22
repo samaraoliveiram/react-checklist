@@ -31,6 +31,7 @@ export default function withAuth(ComponentToProtect : ComponentClass) {
         });
     }
     render() {
+      //@ts-ignore
       const { loading, redirect } = this.state;
       if (loading) {
         return null;

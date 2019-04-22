@@ -6,21 +6,26 @@ import { IonApp, IonPage } from "@ionic/react";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import withAuth from "./components/WithAuth";
+import { theme, ThemeProvider } from "./components/Theme";
 
 class App extends Component {
   render() {
     return (
-      <Router>
-          <IonApp>
-            <IonPage>
-              <Switch>
-                <Route path="/login" component={Login} />
-                {/* <Route path="/secret" component={withAuth(Secret)} /> */}
-                <Route path="/" component={Home} />
-              </Switch>
-            </IonPage>
-          </IonApp>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <div className="App">
+            <IonApp>
+              <IonPage>
+                <Switch>
+                  <Route path="/login" component={Login} />
+                  {/* <Route path="/secret" component={withAuth(Secret)} /> */}
+                  <Route path="/" component={Home} />
+                </Switch>
+              </IonPage>
+            </IonApp>
+          </div>
+        </Router>
+      </ThemeProvider>
     );
   }
 }
