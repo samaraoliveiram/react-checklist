@@ -6,6 +6,7 @@ import { IonApp, IonPage } from "@ionic/react";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import Tasks from "./pages/Tasks";
 import withAuth from "./components/WithAuth";
 import { theme, ThemeProvider } from "./components/Theme";
 
@@ -20,6 +21,7 @@ class App extends Component {
                 <Switch>
                   <Route path="/signin" component={Signin} />
                   <Route path="/signup" component={Signup} />
+                  <Route path="/tasks" component={withAuth(Tasks)} />
                   {/* <Route path="/secret" component={withAuth(Secret)} /> */}
                   <Route path="/" component={Home} />
                 </Switch>
