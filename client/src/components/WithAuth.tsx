@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, ReactComponentElement, ComponentClass } from 'react';
 import { Redirect } from 'react-router-dom';
 
+interface State {
+  loading: boolean;
+  redirect: boolean;
+}
 
-export default function withAuth(ComponentToProtect) {
-  return class extends Component {
-    constructor() {
-      super();
+export default function withAuth(ComponentToProtect : ComponentClass) {
+  return class extends Component<any, State> {
+    constructor(props : any) {
+      super(props);
       this.state = {
         loading: true,
         redirect: false,
