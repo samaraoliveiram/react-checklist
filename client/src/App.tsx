@@ -11,7 +11,6 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
           <IonApp>
             <IonPage>
               <Switch>
@@ -21,7 +20,6 @@ class App extends Component {
               </Switch>
             </IonPage>
           </IonApp>
-        </div>
       </Router>
     );
   }

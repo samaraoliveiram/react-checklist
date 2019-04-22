@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {} from "@ionic/react";
 import { History } from "history";
+import { FormGroup, InputGroup, Button, H1 } from "@blueprintjs/core";
 
 interface LoginState {
   email: string;
@@ -57,24 +58,45 @@ export default class Login extends Component<Props, LoginState> {
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <h1>Login Below!</h1>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter email"
-          value={this.state.email}
-          onChange={this.handleEmailChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          value={this.state.password}
-          onChange={this.handlePasswordChange}
-          required
-        />
-        <input type="submit" value="Submit" />
+        <H1>Sign in</H1>
+        <FormGroup label="Email" labelFor="email">
+          <InputGroup
+            leftIcon="envelope"
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            value={this.state.email}
+            onChange={this.handleEmailChange}
+            required
+            large
+            intent="primary"
+          />
+        </FormGroup>
+        <FormGroup label="Senha">
+          <InputGroup
+            leftIcon="lock"
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+            required
+            large
+            intent="primary"
+          />
+          <FormGroup>
+            <Button
+              intent="primary"
+              large
+              style={{ marginTop: "10px" }}
+              type="submit"
+              value="Submit"
+            >
+              Submit
+            </Button>
+          </FormGroup>
+        </FormGroup>
       </form>
     );
   }
