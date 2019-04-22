@@ -1,8 +1,6 @@
 require("dotenv").config();
-
 import { Response, Request, NextFunction } from "express";
-import jwt, {VerifyCallback} from "jsonwebtoken";
-import User from "./models/User";
+import jwt, { VerifyCallback } from "jsonwebtoken";
 
 const secret = process.env.SECRET;
 
@@ -27,11 +25,7 @@ const createVerifyCallback = (
 };
 
 const withAuth = function(req: Request, res: Response, next: NextFunction) {
-  const token =
-    req.body.token ||
-    req.query.token ||
-    req.headers["x-access-token"] ||
-    req.cookies.token;
+  const token = req.cookies.token; //req.headers["x-usertoken"] as string;
 
   if (!token) {
     res.status(401).send("Unauthorized: No token provided");

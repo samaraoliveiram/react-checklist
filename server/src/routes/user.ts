@@ -1,12 +1,12 @@
 require("dotenv").config();
-import { Router, Response , Request} from "express";
+import { Router, Response, Request } from "express";
 import mongoose from "mongoose";
 import { hash as _hash } from "bcrypt";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import withAuth from "../auth";
-
+import console = require("console");
 
 const secret = process.env.SECRET;
 
@@ -73,14 +73,12 @@ router.post("/signin", function(req, res) {
               expiresIn: "2h"
             }
           );
-          return res.status(200).json({
-            success: "Welcome to the JWT Auth",
-            token: JWTToken
+          res.cookie("token", JWTToken, { httpOnly: true }).sendStatus(200);
+        } else {
+          res.status(401).json({
+            failed: "Unauthorized Access"
           });
         }
-        return res.status(401).json({
-          failed: "Unauthorized Access"
-        });
       });
     })
     .catch(error => {
@@ -94,7 +92,10 @@ router.post("/signin", function(req, res) {
 //   response.send("Que caralhos to fazeno");
 // });
 
-router.get("/checkToken", withAuth, function(request : Request, response : Response) {
+router.get("/checkToken", withAuth, function(
+  request: Request,
+  response: Response
+) {
   response.status(200).send();
 });
 
@@ -129,7 +130,7 @@ router.get("/:id", async (request, response) => {
 router.put("/:id", async (request, response) => {
   try {
     var person = await User.findById(request.params.id).exec();
-    if(!person){
+    if (!person) {
       return false;
     }
     person.set(request.body);
