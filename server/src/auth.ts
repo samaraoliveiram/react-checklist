@@ -1,6 +1,7 @@
 require("dotenv").config();
 import { Response, Request, NextFunction } from "express";
 import jwt, { VerifyCallback } from "jsonwebtoken";
+import User from "./models/User";
 
 const secret = process.env.SECRET;
 
@@ -8,18 +9,21 @@ if (!secret) {
   throw new Error("Missing secret in .env");
 }
 
+export type ReqWithAuth = Request & { user?: string };
 const createVerifyCallback = (
-  req: Request,
+  req: ReqWithAuth,
   res: Response,
   next: NextFunction
-): VerifyCallback => (err, decoded) => {
+): VerifyCallback => async (err, decoded: any) => {
   if (err) {
     res.status(401).send("Unauthorized: Invalid token");
   } else {
-    //@ts-ignore
-    req.email = decoded.email;
-
-    // TODO: verificar se o User existe a partir do email
+    req.user = decoded._id;
+    try {
+      var person = await User.findById(req.user).exec();
+    } catch (error) {
+      res.status(500).send(error);
+    }
     next();
   }
 };
