@@ -5,6 +5,7 @@ import User from "../models/User";
 import bcrypt, { hash as _hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import withAuth from "../auth";
+import console = require("console");
 
 const secret = process.env.SECRET;
 
@@ -22,7 +23,6 @@ router.post("/signup", function(req, res) {
       });
     } else {
       const user = new User({
-        _id: new mongoose.Types.ObjectId(),
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
@@ -31,9 +31,9 @@ router.post("/signup", function(req, res) {
       user
         .save()
         .then(function(result) {
-          console.log(result);
           res.status(200).json({
             success: "New user has been created"
+            //todo gerar token e logar a pissoa
           });
         })
         .catch(error => {
@@ -71,6 +71,9 @@ router.post("/signin", function(req, res) {
               expiresIn: "2h"
             }
           );
+          const { email, id } = user;
+          console.log("Token de: ", { email, id });
+
           res.cookie("token", JWTToken, { httpOnly: true }).sendStatus(200);
         } else {
           res.status(401).json({
@@ -86,65 +89,58 @@ router.post("/signin", function(req, res) {
     });
 });
 
-// router.get("/api/secret", withAuth, function(request : Request, response : Response) {
-//   response.send("Que caralhos to fazeno");
-// });
-
-router.get("/checkToken", withAuth, function(
-  request: Request,
-  response: Response
-) {
-  response.status(200).send();
+router.get("/checkToken", withAuth, function(req, res) {
+  res.status(200).send();
 });
 
-router.get("/", async (request, response) => {
+router.get("/", async (req, res) => {
   try {
     var result = await User.find().exec();
-    response.send(result);
+    res.send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
-router.post("/", async (request, response) => {
+router.post("/", async (req, res) => {
   try {
-    var user = new User(request.body);
+    var user = new User(req.body);
     var result = await user.save();
-    response.send(result);
+    res.send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
-router.get("/:id", async (request, response) => {
+router.get("/:id", async (req, res) => {
   try {
-    var person = await User.findById(request.params.id).exec();
-    response.send(person);
+    var person = await User.findById(req.params.id).exec();
+    res.send(person);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
-router.put("/:id", async (request, response) => {
+router.put("/:id", async (req, res) => {
   try {
-    var person = await User.findById(request.params.id).exec();
+    var person = await User.findById(req.params.id).exec();
     if (!person) {
       return false;
     }
-    person.set(request.body);
+    person.set(req.body);
     var result = await person.save();
-    response.send(result);
+    res.send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", async (req, res) => {
   try {
-    var result = await User.deleteOne({ _id: request.params.id }).exec();
-    response.send(result);
+    var result = await User.deleteOne({ _id: req.params.id }).exec();
+    res.send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
