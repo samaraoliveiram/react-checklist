@@ -15,78 +15,60 @@ if (!secret) {
 
 const router = Router();
 
-router.post("/signup", function(req, res) {
-  _hash(req.body.password, 10, function(err: Error, hash: string) {
-    if (err) {
-      return res.status(500).json({
-        error: err
-      });
-    } else {
-      const user = new User({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: hash
-      });
-      user
-        .save()
-        .then(function(result) {
-          res.status(200).json({
-            success: "New user has been created"
-            //todo gerar token e logar a pissoa
-          });
-        })
-        .catch(error => {
-          res.status(500).json({
-            error: error
-          });
-        });
-    }
-  });
+router.post("/signup", async (req, res) => {
+  try {
+    const hash = await _hash(req.body.password, 10);
+    const user = new User({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: hash
+    });
+    await user.save();
+    const JWTToken = jwt.sign(
+      {
+        email: user.email,
+        _id: user._id
+      },
+      secret,
+      { expiresIn: "2h" }
+    );
+    const { email, id } = user;
+    console.log("Token de: ", { email, id });
+    res.cookie("token", JWTToken, { httpOnly: true }).sendStatus(200);
+  } catch (error) {
+    return res.status(500).json({
+      error: error
+    });
+  }
 });
 
-router.post("/signin", function(req, res) {
-  User.findOne({ email: req.body.email })
-    .exec()
-    .then(function(user) {
-      if (!user) {
-        return res.status(401).json({
-          failed: "Unauthorized Access"
-        });
-      }
-      bcrypt.compare(req.body.password, user.password, function(err, result) {
-        if (err) {
-          return res.status(401).json({
-            failed: "Unauthorized Access"
-          });
-        }
-        if (result) {
-          const JWTToken = jwt.sign(
-            {
-              email: user.email,
-              _id: user._id
-            },
-            secret,
-            {
-              expiresIn: "2h"
-            }
-          );
-          const { email, id } = user;
-          console.log("Token de: ", { email, id });
-
-          res.cookie("token", JWTToken, { httpOnly: true }).sendStatus(200);
-        } else {
-          res.status(401).json({
-            failed: "Unauthorized Access"
-          });
-        }
+router.post("/signin", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(401).json({
+        failed: "Unauthorized Access"
       });
-    })
-    .catch(error => {
-      res.status(500).json({
-        error: error
+    }
+    const result = await bcrypt.compare(req.body.password, user.password);
+    if (result) {
+      const JWTToken = jwt.sign({ email: user.email, _id: user._id }, secret, {
+        expiresIn: "2h"
       });
+      const { email, id } = user;
+      console.log("Token de: ", { email, id });
+      res.cookie("token", JWTToken, { httpOnly: true }).sendStatus(200);
+    } else {
+      res.status(401).json({
+        failed: "Unauthorized Access"
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: error
     });
+  }
 });
 
 router.get("/checkToken", withAuth, function(req, res) {
