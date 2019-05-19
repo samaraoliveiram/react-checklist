@@ -6,8 +6,10 @@ interface State {
   redirect: boolean;
 }
 
-export default function withAuth(ComponentToProtect: ComponentClass | SFC) {
-  return class extends Component<any, State> {
+export default function withAuth<T>(
+  ComponentToProtect: React.ComponentType<T>
+) {
+  return class extends Component<T, State> {
     constructor(props: any) {
       super(props);
       this.state = {
@@ -36,6 +38,7 @@ export default function withAuth(ComponentToProtect: ComponentClass | SFC) {
         return null;
       }
       if (redirect) {
+        console.log("entro onde n devia");
         return <Redirect to="/signin" />;
       }
       return (

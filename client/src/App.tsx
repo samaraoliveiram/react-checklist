@@ -3,12 +3,14 @@ import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { IonApp, IonPage } from "@ionic/react";
+import withAuth from "./components/WithAuth";
+import { theme, ThemeProvider } from "./components/Theme";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import Tasks from "./pages/Tasks";
-import withAuth from "./components/WithAuth";
-import { theme, ThemeProvider } from "./components/Theme";
+import Lists from "./pages/Lists";
+import Todos from "./pages/Todos";
+import NewTodo from "./pages/NewTodo";
 
 class App extends Component {
   render() {
@@ -21,9 +23,10 @@ class App extends Component {
                 <Switch>
                   <Route path="/signin" component={Signin} />
                   <Route path="/signup" component={Signup} />
-                  <Route path="/tasks" component={withAuth(Tasks)} />
-                  {/* <Route path="/secret" component={withAuth(Secret)} /> */}
-                  <Route path="/" component={Home} />
+                  <Route path="/lists/:id/todo" component={withAuth(NewTodo)} />
+                  <Route path="/lists/:id" component={withAuth(Todos)} />
+                  <Route path="/lists" component={withAuth(Lists)} />
+                  <Route path="/" component={withAuth(Home)} />
                 </Switch>
               </IonPage>
             </IonApp>

@@ -38,7 +38,7 @@ router.get("/", withAuth, async (req: ReqWithAuth, res) => {
 
 router.get("/:id", withAuth, async (req: ReqWithAuth, res) => {
   try {
-    const list = await List.find({
+    const list = await List.findOne({
       author: req.user,
       _id: req.params.id
     })

@@ -4,8 +4,7 @@ import mongoose from "mongoose";
 import User from "../models/User";
 import bcrypt, { hash as _hash } from "bcryptjs";
 import jwt from "jsonwebtoken";
-import withAuth from "../auth";
-import console = require("console");
+import withAuth, { ReqWithAuth } from "../auth";
 
 const secret = process.env.SECRET;
 
@@ -14,6 +13,16 @@ if (!secret) {
 }
 
 const router = Router();
+router.get("/me", withAuth, async (req: ReqWithAuth, res) => {
+  try {
+    var me = await User.findOne({ _id: req.user });
+    res.send(me);
+  } catch (error) {
+    res.status(500).json({
+      error: error
+    });
+  }
+});
 
 router.post("/signup", async (req, res) => {
   try {
