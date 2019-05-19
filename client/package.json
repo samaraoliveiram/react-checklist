@@ -17,6 +17,7 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+    "react-swipe-to-delete-component": "^0.5.1",
     "styled-components": "^4.2.0",
     "typescript": "3.4.1"
   },
@@ -37,6 +38,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/globalize": "^0.0.34",
     "@types/react-router-dom": "^4.3.1",
     "@types/styled-components": "^4.1.14",
     "react-router-dom": "^5.0.0"
