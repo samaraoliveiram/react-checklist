@@ -6,22 +6,30 @@ import baseStyled, {
   ThemeProviderComponent
 } from "styled-components";
 
-
 const colors = {
-    base: {
-      main: "#59CBD1",
-      light: "#EEFEFF",
-      dark: "#166B6C",
-      darkest: "#022F33"
-    },
-    secondary: {
-      main: "#F08B00",
-      light: "#F6AF4C"
-    }
-  };
+  base: {
+    light: "#E7E5DF",
+    grey: "#D3D0CB",
+    dark: "#393E41",
+    shadow: "#4B4F52"
+  },
+  secondary: {
+    green: "#44BBA4",
+    yellow: "#E7BB41"
+  }
+};
+
+const sizes = {
+  xs: "4px",
+  sm: "8px",
+  md: "16px",
+  lg: "32px",
+  xl: "40px"
+};
 
 export const theme = {
   colors,
+  sizes
 };
 
 export type Theme = typeof theme;

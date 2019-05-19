@@ -2,6 +2,7 @@ import React, { Component, ChangeEvent } from "react";
 import { IonItemDivider } from "@ionic/react";
 import { History } from "history";
 import { FormGroup, InputGroup, Button, H1 } from "@blueprintjs/core";
+import { styled } from "./Theme";
 
 interface SignupState {
   firstname: string;
@@ -13,6 +14,9 @@ interface SignupState {
 interface Props {
   history: History;
 }
+const Wrapper = styled.div`
+  padding: 15px 20px;
+`;
 
 export default class Signup extends Component<Props, SignupState> {
   state = {
@@ -55,73 +59,75 @@ export default class Signup extends Component<Props, SignupState> {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <H1>Sign up</H1>
-        <FormGroup label="First name" labelFor="firstname">
-          <InputGroup
-            id="firstname"
-            type="firstname"
-            name="firstname"
-            placeholder="Enter firstname"
-            value={this.state.firstname}
-            onChange={this.handleChange}
-            required
-            large
-            intent="primary"
-          />
-        </FormGroup>
-        <FormGroup label="Last name" labelFor="lastname">
-          <InputGroup
-            id="lastname"
-            type="lastname"
-            name="lastname"
-            placeholder="Enter lastname"
-            value={this.state.lastname}
-            onChange={this.handleChange}
-            required
-            large
-            intent="primary"
-          />
-        </FormGroup>
-        <FormGroup label="Email" labelFor="email">
-          <InputGroup
-            leftIcon="envelope"
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Enter email"
-            value={this.state.email}
-            onChange={this.handleChange}
-            required
-            large
-            intent="primary"
-          />
-        </FormGroup>
-        <FormGroup label="Senha">
-          <InputGroup
-            leftIcon="lock"
-            type="password"
-            name="password"
-            placeholder="Enter password"
-            value={this.state.password}
-            onChange={this.handleChange}
-            required
-            large
-            intent="primary"
-          />
-          <FormGroup>
-            <Button
-              intent="primary"
+      <Wrapper>
+        <form onSubmit={this.onSubmit}>
+          <H1>Sign up</H1>
+          <FormGroup label="First name" labelFor="firstname">
+            <InputGroup
+              id="firstname"
+              type="firstname"
+              name="firstname"
+              placeholder="Enter firstname"
+              value={this.state.firstname}
+              onChange={this.handleChange}
+              required
               large
-              style={{ marginTop: "10px" }}
-              type="submit"
-              value="Submit"
-            >
-              Submit
-            </Button>
+              intent="primary"
+            />
           </FormGroup>
-        </FormGroup>
-      </form>
+          <FormGroup label="Last name" labelFor="lastname">
+            <InputGroup
+              id="lastname"
+              type="lastname"
+              name="lastname"
+              placeholder="Enter lastname"
+              value={this.state.lastname}
+              onChange={this.handleChange}
+              required
+              large
+              intent="primary"
+            />
+          </FormGroup>
+          <FormGroup label="Email" labelFor="email">
+            <InputGroup
+              leftIcon="envelope"
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Enter email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              required
+              large
+              intent="primary"
+            />
+          </FormGroup>
+          <FormGroup label="Senha">
+            <InputGroup
+              leftIcon="lock"
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              value={this.state.password}
+              onChange={this.handleChange}
+              required
+              large
+              intent="primary"
+            />
+            <FormGroup>
+              <Button
+                intent="primary"
+                large
+                style={{ marginTop: "10px" }}
+                type="submit"
+                value="Submit"
+              >
+                Submit
+              </Button>
+            </FormGroup>
+          </FormGroup>
+        </form>
+      </Wrapper>
     );
   }
 }
