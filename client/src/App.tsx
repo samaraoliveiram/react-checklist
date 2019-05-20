@@ -41,7 +41,7 @@ class App extends Component {
                   />
                   <Route path="/lists/:id" component={withAuth(Todos)} />
                   <Route path="/lists" component={withAuth(Lists)} />
-                  <Route path="/" component={withAuth(Home)} />
+                  <Route path="/" component={Home} />
                 </Switch>
               </IonPage>
             </IonApp>
