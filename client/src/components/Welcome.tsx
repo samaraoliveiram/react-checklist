@@ -1,7 +1,9 @@
 import React, { Component, ChangeEvent } from "react";
 import { History } from "history";
-import { H2 as MH2 } from "@blueprintjs/core";
+import { H2 as MH2, Button } from "@blueprintjs/core";
 import { styled, theme } from "../components/Theme";
+import { RouteComponentProps, withRouter } from "react-router";
+import withAuth from "./WithAuth";
 interface WelcomeState {
   name: string;
 }
@@ -17,7 +19,7 @@ const H2 = styled(MH2)`
   color: ${theme.colors.secondary.green};
 `;
 
-export default class Welcome extends Component<{}, WelcomeState> {
+class Welcome extends Component<RouteComponentProps, WelcomeState> {
   state = {
     name: ""
   };
@@ -30,12 +32,19 @@ export default class Welcome extends Component<{}, WelcomeState> {
   componentDidMount() {
     this.loadName();
   }
+  signOut = async () => {
+    await fetch(`/api/users/signout`);
+    this.props.history.push(`/`);
+  };
 
   render() {
     return (
       <Box>
         <H2>Olá {this.state.name}, o que fará hoje? </H2>
+        <Button onClick={this.signOut}>Signout</Button>
       </Box>
     );
   }
 }
+
+export default withRouter(Welcome);

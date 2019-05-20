@@ -80,6 +80,10 @@ router.post("/signin", async (req, res) => {
   }
 });
 
+router.get("/signout", async (req, res) => {
+  res.clearCookie("token", { httpOnly: true }).sendStatus(200);
+});
+
 router.get("/checkToken", withAuth, function(req, res) {
   res.status(200).send();
 });
