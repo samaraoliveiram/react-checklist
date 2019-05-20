@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { History } from "history";
-import { Card as MCard, H5, Button as MButton, Icon } from "@blueprintjs/core";
+import { Card as MCard, H5, Button, Icon } from "@blueprintjs/core";
 import { styled, theme } from "../components/Theme";
 import { Link } from "react-router-dom";
-import SwipeToDelete from "react-swipe-to-delete-component";
+import { withRouter, RouteComponentProps } from "react-router";
 
 interface IList {
   _id: string;
@@ -22,7 +21,7 @@ const Wrapper = styled.div`
   margin-top: ${theme.sizes.lg};
 `;
 
-const Button = styled(MButton)`
+const PlusButton = styled(Button)`
   border-radius: 100%;
   border-color: ${theme.colors.base.dark};
   border-width: 2px;
@@ -32,7 +31,7 @@ const Button = styled(MButton)`
   right: 5%;
 `;
 
-class List extends Component<{}, ListState> {
+class List extends Component<RouteComponentProps, ListState> {
   state = {
     lists: []
   };
@@ -46,47 +45,67 @@ class List extends Component<{}, ListState> {
     this.loadList();
   }
 
-  // deleteList = async (listID: string) => {
-  // onDelete={() => this.deleteList(list._id)}
-  //   const list = await fetch(`/api/lists/${listID}`, {
-  //     method: "DELETE"
-  //   })
-  //     .then(r => {
-  //       return r.json();
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //       alert("Error on delete List");
-  //     });
-  // };
+  removeItem = (arrayLists: IList[], id: string): IList[] => {
+    return arrayLists.filter(item => (item._id == id ? false : true));
+  };
+
+  deleteList = async (listID: string) => {
+    this.setState(prevState => ({
+      lists: this.removeItem(prevState.lists, listID)
+    }));
+    const list = await fetch(`/api/lists/${listID}`, {
+      method: "DELETE"
+    })
+      .then(r => {
+        return r.json();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error on delete List");
+      });
+  };
+
+  editList = async (list: IList) => {
+    this.props.history.push(`/lists/${list._id}/edit`, list);
+  };
 
   render() {
     return (
       <>
         {this.state.lists.map((list: IList) => (
           <Wrapper key={list._id}>
-            <SwipeToDelete>
+            <Card elevation={2}>
               <Link to={`/lists/${list._id}`}>
-                <Card elevation={2}>
-                  <H5>{list.title}</H5>
-                  <p>{list.description}</p>
-                </Card>
+                <H5>{list.title}</H5>
+                <p>{list.description}</p>
               </Link>
-            </SwipeToDelete>
+              <Button intent="danger" onClick={() => this.deleteList(list._id)}>
+                <Icon icon="trash" iconSize={20} />
+              </Button>
+              <Button
+                intent="success"
+                style={{ marginLeft: "20px" }}
+                onClick={() => this.editList(list)}
+              >
+                <Icon icon="edit" iconSize={20} />
+              </Button>
+            </Card>
           </Wrapper>
         ))}
-        <Button>
-          <Icon
-            icon="plus"
-            iconSize={35}
-            style={{
-              color: theme.colors.base.dark
-            }}
-          />
-        </Button>
+        <PlusButton>
+          <Link to={`/lists/create`}>
+            <Icon
+              icon="plus"
+              iconSize={35}
+              style={{
+                color: theme.colors.base.dark
+              }}
+            />
+          </Link>
+        </PlusButton>
       </>
     );
   }
 }
 
-export default List;
+export default withRouter(List);
