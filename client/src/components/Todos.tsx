@@ -76,6 +76,13 @@ const Box = styled.div`
   align-items: center;
 `;
 
+const MH5 = styled(H5)`
+  color: ${theme.colors.base.light};
+`;
+const MH6 = styled(H6)`
+  color: ${theme.colors.base.light};
+`;
+
 class Todos extends Component<Props, TodoState> {
   state = {
     title: "",
@@ -165,8 +172,8 @@ class Todos extends Component<Props, TodoState> {
             </Link>
           </div>
           <div style={{ textAlign: "right" }}>
-            <H5>{this.state.title}</H5>
-            <H6>{this.state.description}</H6>
+            <MH5>{this.state.title}</MH5>
+            <MH6>{this.state.description}</MH6>
           </div>
         </Box>
         {this.state.todos.map((todo: ITodo) => (

@@ -69,16 +69,18 @@ class List extends Component<RouteComponentProps, ListState> {
     this.props.history.push(`/lists/${list._id}/edit`, list);
   };
 
+  goCard = async (id: string) => {
+    this.props.history.push(`/lists/${id}`);
+  };
+
   render() {
     return (
       <>
         {this.state.lists.map((list: IList) => (
           <Wrapper key={list._id}>
-            <Card elevation={2}>
-              <Link to={`/lists/${list._id}`}>
-                <H5>{list.title}</H5>
-                <p>{list.description}</p>
-              </Link>
+            <Card elevation={2} onClick={() => this.goCard(list._id)}>
+              <H5>{list.title}</H5>
+              <p>{list.description}</p>
               <Button intent="danger" onClick={() => this.deleteList(list._id)}>
                 <Icon icon="trash" iconSize={20} />
               </Button>
