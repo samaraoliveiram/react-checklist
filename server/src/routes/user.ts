@@ -84,6 +84,17 @@ router.get("/signout", async (req, res) => {
   res.clearCookie("token", { httpOnly: true }).sendStatus(200);
 });
 
+router.patch("/profile/:id", withAuth, async (req: ReqWithAuth, res) => {
+  try {
+    const result = await User.findByIdAndUpdate(req.user, req.body, {
+      new: true
+    }).exec();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 router.get("/checkToken", withAuth, function(req, res) {
   res.status(200).send();
 });

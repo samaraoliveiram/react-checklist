@@ -14,6 +14,7 @@ import NewTodo from "./pages/NewTodo";
 import EditList from "./pages/EditList";
 import CreateListPage from "./pages/CreateList";
 import EditTodo from "./pages/EditTodo";
+import Profile from "./pages/Profile";
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
                 <Switch>
                   <Route path="/signin" component={Signin} />
                   <Route path="/signup" component={Signup} />
+                  <Route path="/profile" component={withAuth(Profile)} />
                   <Route path="/todo/:id/edit" component={withAuth(EditTodo)} />
                   <Route
                     path="/lists/:id/todo/create"
