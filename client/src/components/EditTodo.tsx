@@ -4,12 +4,6 @@ import { styled } from "./Theme";
 import { Link } from "react-router-dom";
 import { withRouter, RouteComponentProps } from "react-router";
 
-let today = new Date().toISOString().substr(0, 10);
-
-interface Props extends RouteComponentProps {
-  listID: string;
-}
-
 interface TodoState {
   title: string;
   description: string;
@@ -20,12 +14,9 @@ const Wrapper = styled.div`
   padding: 15px 20px;
 `;
 
-class NewTodo extends Component<Props, TodoState> {
+class EditTodo extends Component<RouteComponentProps, TodoState> {
   state = {
-    title: "",
-    description: "",
-    date: new Date(),
-    list: this.props.listID
+    ...this.props.history.location.state
   };
 
   handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -39,25 +30,30 @@ class NewTodo extends Component<Props, TodoState> {
   onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await fetch("/api/todos/", {
-        method: "POST",
-        body: JSON.stringify(this.state),
+      const result = await fetch(`/api/todos/${this.state._id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          ...this.state,
+          date: new Date(this.state.date + " ").toString()
+        }),
         headers: {
           "Content-Type": "application/json"
         }
       });
       const todo = await result.json();
-      this.props.history.push(`/lists/${this.props.listID}`);
+      console.log(todo);
+      this.props.history.push(`/lists/${this.state.list}`);
     } catch (error) {
-      alert("Error on insert List: " + error);
+      alert("Error on insert Todo: " + error);
     }
   };
 
   render() {
+    console.log(this.state);
     return (
       <>
         <Wrapper>
-          <Link to={`/lists/${this.props.listID}`}>
+          <Link to={`/lists/${this.state.list}`}>
             <Icon
               icon="chevron-left"
               iconSize={30}
@@ -95,7 +91,7 @@ class NewTodo extends Component<Props, TodoState> {
                 id="date"
                 type="date"
                 name="date"
-                defaultValue={today}
+                value={new Date(this.state.date).toISOString().substr(0, 10)}
                 onChange={this.handleChange}
                 required
                 pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
@@ -119,4 +115,4 @@ class NewTodo extends Component<Props, TodoState> {
   }
 }
 
-export default withRouter(NewTodo);
+export default withRouter(EditTodo);
