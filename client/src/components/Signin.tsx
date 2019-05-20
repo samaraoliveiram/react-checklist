@@ -30,7 +30,7 @@ export default class Signin extends Component<Props, SigninState> {
     });
   };
 
-  onSubmit = (event: any) => {
+  onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     fetch("/api/users/signin", {
       method: "POST",

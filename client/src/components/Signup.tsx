@@ -34,7 +34,7 @@ export default class Signup extends Component<Props, SignupState> {
     });
   };
 
-  onSubmit = (event: any) => {
+  onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     fetch("/api/users/signup", {
       method: "POST",
