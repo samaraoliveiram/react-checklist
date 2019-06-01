@@ -67,7 +67,10 @@ router.post("/signin", async (req, res) => {
       });
       const { email, id } = user;
       console.log("Token de: ", { email, id });
-      res.cookie("token", JWTToken, { httpOnly: true }).sendStatus(200);
+      res
+        .cookie("username", user.firstname)
+        .cookie("token", JWTToken, { httpOnly: true })
+        .sendStatus(200);
     } else {
       res.status(401).json({
         failed: "Unauthorized Access"

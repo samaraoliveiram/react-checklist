@@ -9,7 +9,7 @@ if (!secret) {
   throw new Error("Missing secret in .env");
 }
 
-export type ReqWithAuth = Request & { user?: string };
+export type ReqWithAuth = Request & { user?: string; username?: string };
 const createVerifyCallback = (
   req: ReqWithAuth,
   res: Response,

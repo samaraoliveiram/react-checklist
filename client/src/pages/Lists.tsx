@@ -1,5 +1,5 @@
 import React from "react";
-import Welcome from "../components/Welcome";
+import Welcome from "../components/Nav";
 import List from "../components/List";
 import { RouteComponentProps } from "react-router";
 

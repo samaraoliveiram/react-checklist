@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
-import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { IonApp, IonPage } from "@ionic/react";
 import withAuth from "./components/WithAuth";
-import { theme, ThemeProvider } from "./components/Theme";
+import { theme, ThemeProvider, GlobalStyle } from "./components/Theme";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
@@ -21,6 +20,7 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <Router>
+          <GlobalStyle />
           <div className="App">
             <IonApp>
               <IonPage>

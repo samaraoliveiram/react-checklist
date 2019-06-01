@@ -2,6 +2,7 @@ import React from "react";
 import { H1, Divider, ButtonGroup } from "@blueprintjs/core";
 import { Link } from "react-router-dom";
 import { styled } from "../components/Theme";
+import { SwipeAble } from "../components/SwipeCard";
 
 const Wrapper = styled.div`
   text-align: center;

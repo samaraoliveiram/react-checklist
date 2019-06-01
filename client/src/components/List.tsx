@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Card as MCard, H5, Button, Icon } from "@blueprintjs/core";
+import { Card as MCard, H5 } from "@blueprintjs/core";
 import { styled, theme } from "../components/Theme";
+import { Add } from "./AddButton";
 import { Link } from "react-router-dom";
 import { withRouter, RouteComponentProps } from "react-router";
+import { SwipeAble } from "./SwipeCard";
 
 interface IList {
   _id: string;
@@ -14,21 +16,13 @@ interface ListState {
   lists: IList[];
 }
 
-const Card = styled(MCard)`
-  border-radius: 0px;
-`;
 const Wrapper = styled.div`
   margin-top: ${theme.sizes.lg};
 `;
 
-const PlusButton = styled(Button)`
-  border-radius: 100%;
-  border-color: ${theme.colors.base.dark};
-  border-width: 2px;
-  border-style: solid;
-  position: fixed;
-  bottom: 5%;
-  right: 5%;
+const Card = styled(MCard)`
+  height: 100%;
+  border-radius: 0px;
 `;
 
 class List extends Component<RouteComponentProps, ListState> {
@@ -76,35 +70,25 @@ class List extends Component<RouteComponentProps, ListState> {
   render() {
     return (
       <>
-        {this.state.lists.map((list: IList) => (
-          <Wrapper key={list._id}>
-            <Card elevation={2} onClick={() => this.goCard(list._id)}>
-              <H5>{list.title}</H5>
-              <p>{list.description}</p>
-              <Button intent="danger" onClick={() => this.deleteList(list._id)}>
-                <Icon icon="trash" iconSize={20} />
-              </Button>
-              <Button
-                intent="success"
-                style={{ marginLeft: "20px" }}
-                onClick={() => this.editList(list)}
+        {this.state.lists &&
+          this.state.lists.map((list: IList) => (
+            <Wrapper key={list._id}>
+              <SwipeAble
+                onClick={() => this.goCard(list._id)}
+                onSwipeRight={() => this.editList(list)}
+                onSwipeLeft={() => this.deleteList(list._id)}
+                size="big"
               >
-                <Icon icon="edit" iconSize={20} />
-              </Button>
-            </Card>
-          </Wrapper>
-        ))}
-        <PlusButton>
-          <Link to={`/lists/create`}>
-            <Icon
-              icon="plus"
-              iconSize={35}
-              style={{
-                color: theme.colors.base.dark
-              }}
-            />
-          </Link>
-        </PlusButton>
+                <Card elevation={2}>
+                  <H5>{list.title}</H5>
+                  <p>{list.description}</p>
+                </Card>
+              </SwipeAble>
+            </Wrapper>
+          ))}
+        <Link to={`/lists/create`}>
+          <Add />
+        </Link>
       </>
     );
   }

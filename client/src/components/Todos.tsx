@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Card as MCard, H5, Button, Icon, H6 } from "@blueprintjs/core";
 import { styled, theme } from "../components/Theme";
+import { Add } from "./AddButton";
+import { SwipeAble } from "./SwipeCard";
 import { formatedDate } from "../lib/formatDate";
 import { Link } from "react-router-dom";
 import { withRouter, RouteComponentProps } from "react-router";
@@ -24,9 +26,12 @@ interface Props extends RouteComponentProps {
   list: string;
 }
 
+const Wrapper = styled.div`
+  margin-top: ${theme.sizes.lg};
+`;
+
 const Card = styled(MCard)`
-  margin: ${theme.sizes.lg} ${theme.sizes.sm} 0px ${theme.sizes.sm};
-  padding: ${theme.sizes.sm} ${theme.sizes.md} ${theme.sizes.sm};
+  height: 100%;
   border-radius: 0px;
   display: flex;
   justify-content: space-between;
@@ -34,17 +39,22 @@ const Card = styled(MCard)`
 `;
 
 const Check = styled.div`
-  background-color: ${theme.colors.base.grey};
-  width: ${theme.sizes.lg};
-  height: ${theme.sizes.lg};
+  border-style: solid;
+  border-color: ${theme.colors.base.lighter};
+  border-width: 5px;
+  border-radius: 5%;
+  opacity: 0.7;
+  width: ${theme.sizes.xl};
+  height: ${theme.sizes.xl};
   position: relative;
   flex-shrink: 0;
   margin-right: 5px;
 `;
 const Icon2 = styled(Icon)`
-  position: absolute;
-  height: 100px;
-  margin-top: -5px;
+  border-width: 4px;
+  margin-top: -24px;
+  margin-left: -8px;
+  color: ${theme.colors.secondary.blue};
 `;
 
 const Info = styled.div`
@@ -55,20 +65,10 @@ const Date = styled.div`
   text-align: center;
 `;
 
-const PlusButton = styled(Button)`
-  border-radius: 100%;
-  border-color: ${theme.colors.base.dark};
-  border-width: 2px;
-  border-style: solid;
-  position: fixed;
-  bottom: 5%;
-  right: 5%;
-`;
-
 const Box = styled.div`
   height: 20vh;
-  background-color: ${theme.colors.base.dark};
-  box-shadow: 2px 2px 5px ${theme.colors.base.shadow};
+  background-color: ${theme.colors.base.darkest};
+  box-shadow: 2px 2px 5px ${theme.colors.base.darker};
   padding: ${theme.sizes.sm};
   display: flex;
   flex-direction: row;
@@ -77,10 +77,10 @@ const Box = styled.div`
 `;
 
 const MH5 = styled(H5)`
-  color: ${theme.colors.base.light};
+  color: ${theme.colors.base.lightest};
 `;
 const MH6 = styled(H6)`
-  color: ${theme.colors.base.light};
+  color: ${theme.colors.base.lightest};
 `;
 
 class Todos extends Component<Props, TodoState> {
@@ -154,6 +154,7 @@ class Todos extends Component<Props, TodoState> {
   };
 
   editList = async (todo: ITodo) => {
+    console.log(todo._id);
     this.props.history.push(`/todo/${todo._id}/edit`, todo);
   };
 
@@ -177,41 +178,32 @@ class Todos extends Component<Props, TodoState> {
           </div>
         </Box>
         {this.state.todos.map((todo: ITodo) => (
-          <Card key={todo._id} interactive={true} elevation={2}>
-            <Check onClick={() => toggleTodo(todo)}>
-              {todo.done ? <Icon2 icon="tick" iconSize={40} /> : null}
-            </Check>
-            <Info>
-              <H5 style={{ marginBottom: "3px" }}>{todo.title}</H5>
-              <p style={{ marginBottom: "0px" }}>{todo.description}</p>
-            </Info>
-            <Date>
-              <H6>{formatedDate.day(todo.date.toString())}</H6>
-              <H6>{formatedDate.month(todo.date.toString())}</H6>
-            </Date>
-            <Button intent="danger" onClick={() => this.deleteTodo(todo._id)}>
-              <Icon icon="trash" iconSize={20} />
-            </Button>
-            <Button
-              intent="success"
-              style={{ marginLeft: "20px" }}
-              onClick={() => this.editList(todo)}
+          <Wrapper key={todo._id}>
+            <SwipeAble
+              onClick={() => toggleTodo(todo)}
+              onSwipeRight={() => this.editList(todo)}
+              onSwipeLeft={() => this.deleteTodo(todo._id)}
+              size="small"
             >
-              <Icon icon="edit" iconSize={20} />
-            </Button>
-          </Card>
+              <Card elevation={2}>
+                <Date>
+                  <H6>{formatedDate.day(todo.date.toString())}</H6>
+                  <H6>{formatedDate.month(todo.date.toString())}</H6>
+                </Date>
+                <Info>
+                  <H5 style={{ marginBottom: "3px" }}>{todo.title}</H5>
+                  <p style={{ marginBottom: "0px" }}>{todo.description}</p>
+                </Info>
+                <Check>
+                  {todo.done ? <Icon2 icon="tick" iconSize={65} /> : null}
+                </Check>
+              </Card>
+            </SwipeAble>
+          </Wrapper>
         ))}
-        <PlusButton>
-          <Link to={`/lists/${this.props.list}/todo/create`}>
-            <Icon
-              icon="plus"
-              iconSize={35}
-              style={{
-                color: theme.colors.base.dark
-              }}
-            />
-          </Link>
-        </PlusButton>
+        <Link to={`/lists/${this.props.list}/todo/create`}>
+          <Add />
+        </Link>
       </>
     );
   }
