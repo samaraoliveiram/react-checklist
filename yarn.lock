@@ -8965,6 +8965,14 @@ react-spring@^8.0.20:
     "@babel/runtime" "^7.3.1"
     prop-types "^15.5.8"
 
+react-spring@^9.0.0-beta.8:
+  version "9.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-9.0.0-beta.8.tgz#dd4348d3d6dd88ff596b36fa85b3328200914b15"
+  integrity sha512-pcyQqr5W9HBM5Rm0rmdbVIEQz7wocAfWBNWSUm/EEvpb4M0OQ3Xp9JW6Ayo+6ZgV7fLzJJHO/QgNdUMpAtVaTw==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    prop-types "^15.5.8"
+
 react-transition-group@^2.2.1:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.9.0.tgz#df9cdb025796211151a436c69a8f3b97b5b07c8d"
@@ -8974,6 +8982,11 @@ react-transition-group@^2.2.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
+
+react-use-gesture@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/react-use-gesture/-/react-use-gesture-5.0.2.tgz#d7d27714fde40d1d62ac8ea78aa0e5c72e47ac04"
+  integrity sha512-0+Us/aHNuCT4mlI4L98+VYTLiAN2uXvmUN7tQUvnsD5A/sUMbpZuSq2LQEklea4IJNT+toZ5Fo3mjrc4nhmBHg==
 
 react@^16.8.6:
   version "16.8.6"

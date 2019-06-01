@@ -6,9 +6,15 @@
   "author": "Samara Motta",
   "license": "MIT",
   "private": true,
-  "workspaces": ["client", "server"],
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
     "client:start": "yarn workspace client start",
     "server:start": "yarn workspace server start"
+  },
+  "dependencies": {
+    "react-spring": "^8.0.20"
   }
 }
