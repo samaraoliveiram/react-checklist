@@ -38,7 +38,6 @@ export default function withAuth<T>(
         return null;
       }
       if (redirect) {
-        console.log("entro onde n devia");
         return <Redirect to="/signin" />;
       }
       return (

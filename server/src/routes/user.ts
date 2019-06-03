@@ -43,7 +43,6 @@ router.post("/signup", async (req, res) => {
       { expiresIn: "2h" }
     );
     const { email, id } = user;
-    console.log("Token de: ", { email, id });
     res.cookie("token", JWTToken, { httpOnly: true }).sendStatus(200);
   } catch (error) {
     return res.status(500).json({
@@ -66,7 +65,6 @@ router.post("/signin", async (req, res) => {
         expiresIn: "2h"
       });
       const { email, id } = user;
-      console.log("Token de: ", { email, id });
       res
         .cookie("username", user.firstname)
         .cookie("token", JWTToken, { httpOnly: true })

@@ -1,5 +1,4 @@
 import React, { Component, ChangeEvent } from "react";
-import { IonItemDivider } from "@ionic/react";
 import { History } from "history";
 import { FormGroup, InputGroup, Button, H1 } from "@blueprintjs/core";
 import { styled } from "./Theme";

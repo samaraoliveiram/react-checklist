@@ -1,7 +1,7 @@
 require("dotenv").config();
 import { Router, Response, Request } from "express";
 import mongoose from "mongoose";
-import todo from "../models/Todo";
+import todo, { ITodo } from "../models/Todo";
 import withAuth, { ReqWithAuth } from "../auth";
 import List from "../models/List";
 import Todo from "../models/Todo";

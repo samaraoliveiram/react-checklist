@@ -8,17 +8,18 @@ import baseStyled, {
 
 const colors = {
   base: {
-    darkest: "#0B1119",
-    darker: "#1E3048",
-    dark: "#2E496E",
-    main: "#506D97",
-    ligh: "#7F97BB",
-    lighter: "#B4C4DD",
-    lightest: "#E9EEF7"
+    darkest: "#0B1216",
+    darker: "#1C2F39",
+    dark: "#305163",
+    main: "#4B7890",
+    ligh: "#729FB9",
+    lighter: "#AAC8DB",
+    lightest: "#F5F7F8"
   },
   secondary: {
     blue: "#5BC0EB",
-    yellow: "#FDE74C"
+    purple: "#7E6BF5",
+    pink: "#F96DA3"
   }
 };
 
@@ -31,9 +32,7 @@ const sizes = {
 };
 
 const fonts = {
-  Ubuntu: "'Ubuntu', sans-serif",
-  Merriweather: "'Merriweather Sans', sans-serif",
-  Titillium: "'Titillium Web', sans-serif"
+  Muli: "'Muli', sans-serif"
 };
 
 export const theme = {
@@ -43,10 +42,11 @@ export const theme = {
 };
 
 export const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css?family=Cabin:600|Merriweather+Sans:700|Raleway:700|Titillium+Web:700|Ubuntu:700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Muli:400,700&display=swap');
   body {
     background-color: ${colors.base.lightest};
     min-height: 100vh;
+    font-family:'Muli', sans-serif; 
   }
 `;
 

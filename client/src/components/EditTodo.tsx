@@ -41,7 +41,6 @@ class EditTodo extends Component<RouteComponentProps, TodoState> {
         }
       });
       const todo = await result.json();
-      console.log(todo);
       this.props.history.push(`/lists/${this.state.list}`);
     } catch (error) {
       alert("Error on insert Todo: " + error);
@@ -49,7 +48,6 @@ class EditTodo extends Component<RouteComponentProps, TodoState> {
   };
 
   render() {
-    console.log(this.state);
     return (
       <>
         <Wrapper>

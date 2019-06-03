@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card as MCard, H5 } from "@blueprintjs/core";
+import { Card as MCard, H5, Icon } from "@blueprintjs/core";
 import { styled, theme } from "../components/Theme";
 import { Add } from "./AddButton";
 import { Link } from "react-router-dom";
@@ -10,10 +10,17 @@ interface IList {
   _id: string;
   title: string;
   description: string;
+  todos: ITodo[];
+  done: boolean;
+}
+
+interface ITodo {
+  done: boolean;
 }
 
 interface ListState {
   lists: IList[];
+  done: boolean;
 }
 
 const Wrapper = styled.div`
@@ -21,13 +28,17 @@ const Wrapper = styled.div`
 `;
 
 const Card = styled(MCard)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 100%;
   border-radius: 0px;
 `;
 
 class List extends Component<RouteComponentProps, ListState> {
   state = {
-    lists: []
+    lists: [],
+    done: false
   };
 
   loadList = async () => {
@@ -80,8 +91,13 @@ class List extends Component<RouteComponentProps, ListState> {
                 size="big"
               >
                 <Card elevation={2}>
-                  <H5>{list.title}</H5>
-                  <p>{list.description}</p>
+                  <div>
+                    <H5>{list.title}</H5>
+                    <p>{list.description}</p>
+                  </div>
+                  <div>
+                    {list.done ? <Icon icon="tick" iconSize={30} /> : null}
+                  </div>
                 </Card>
               </SwipeAble>
             </Wrapper>

@@ -73,6 +73,28 @@ router.patch("/:id", withAuth, async (req: ReqWithAuth, res) => {
       req.body,
       { new: true }
     ).exec();
+    if (todo) {
+      const list = await List.findOne({
+        author: req.user,
+        _id: todo.list
+      })
+        .populate("todos")
+        .exec();
+      if (list) {
+        //@ts-ignore
+        const bool = list.todos.every(todo =>
+          todo.done == true ? true : false
+        )
+          ? true
+          : false;
+        list.done = bool;
+        const attList = await List.findOneAndUpdate(
+          { author: req.user, _id: list.id },
+          list,
+          { new: true }
+        ).exec();
+      }
+    }
     res.send(todo);
   } catch (error) {
     res.status(500).json({

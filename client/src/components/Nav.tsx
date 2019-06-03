@@ -2,20 +2,16 @@ import React, { Component, ChangeEvent } from "react";
 import { Icon } from "@blueprintjs/core";
 import { styled, theme } from "./Theme";
 import { RouteComponentProps, withRouter } from "react-router";
-import { H1, H2 } from "./Text";
+import { H2, H3 } from "./Text";
+import { Box } from "./Header";
 
 interface WelcomeState {
   firstname: string;
 }
 
-const Box = styled.div`
-  padding: ${theme.sizes.sm} ${theme.sizes.md} ${theme.sizes.sm};
-  background-color: ${theme.colors.base.darkest};
-  box-shadow: 2px 2px 5px ${theme.colors.base.darker};
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
+const Align = styled.div`
+  flex-direction: column;
+  justify-content: center;
 `;
 
 class Welcome extends Component<RouteComponentProps, WelcomeState> {
@@ -46,31 +42,36 @@ class Welcome extends Component<RouteComponentProps, WelcomeState> {
   render() {
     return (
       <Box>
-        <div>
-          <H1>Olá {this.state.firstname}</H1>
-          <H2>o que fará hoje?</H2>
-        </div>
-        <div>
-          <Icon
-            onClick={this.signOut}
+        <Align>
+          <div>
+            <H2 light>Olá {this.state.firstname}</H2>
+            <H3 light>o que fará hoje?</H3>
+          </div>
+          <div
             style={{
-              color: theme.colors.base.lightest,
-              order: -1
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between"
             }}
-            icon="log-out"
-            iconSize={25}
-          />
-          <Icon
-            style={{
-              marginLeft: "8px",
-              color: theme.colors.base.lightest,
-              order: 1
-            }}
-            icon="person"
-            onClick={() => this.profile(this.state)}
-            iconSize={25}
-          />
-        </div>
+          >
+            <div>
+              <Icon
+                style={{ color: theme.colors.base.lightest, flexGrow: 1 }}
+                icon="person"
+                onClick={() => this.profile(this.state)}
+                iconSize={22}
+              />
+            </div>
+            <div>
+              <Icon
+                onClick={this.signOut}
+                style={{ color: theme.colors.base.lightest, flexGrow: 1 }}
+                icon="log-out"
+                iconSize={22}
+              />
+            </div>
+          </div>
+        </Align>
       </Box>
     );
   }
