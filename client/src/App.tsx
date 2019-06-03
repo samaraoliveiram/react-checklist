@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { IonApp, IonPage } from "@ionic/react";
 import withAuth from "./components/WithAuth";
 import { theme, ThemeProvider, GlobalStyle } from "./components/Theme";
 import Home from "./pages/Home";
@@ -22,31 +20,24 @@ class App extends Component {
         <Router>
           <GlobalStyle />
           <div className="App">
-            <IonApp>
-              <IonPage>
-                <Switch>
-                  <Route path="/signin" component={Signin} />
-                  <Route path="/signup" component={Signup} />
-                  <Route path="/profile" component={withAuth(Profile)} />
-                  <Route path="/todo/:id/edit" component={withAuth(EditTodo)} />
-                  <Route
-                    path="/lists/:id/todo/create"
-                    component={withAuth(NewTodo)}
-                  />
-                  <Route
-                    path="/lists/create"
-                    component={withAuth(CreateListPage)}
-                  />
-                  <Route
-                    path="/lists/:id/edit"
-                    component={withAuth(EditList)}
-                  />
-                  <Route path="/lists/:id" component={withAuth(Todos)} />
-                  <Route path="/lists" component={withAuth(Lists)} />
-                  <Route path="/" component={Home} />
-                </Switch>
-              </IonPage>
-            </IonApp>
+            <Switch>
+              <Route path="/signin" component={Signin} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/profile" component={withAuth(Profile)} />
+              <Route path="/todo/:id/edit" component={withAuth(EditTodo)} />
+              <Route
+                path="/lists/:id/todo/create"
+                component={withAuth(NewTodo)}
+              />
+              <Route
+                path="/lists/create"
+                component={withAuth(CreateListPage)}
+              />
+              <Route path="/lists/:id/edit" component={withAuth(EditList)} />
+              <Route path="/lists/:id" component={withAuth(Todos)} />
+              <Route path="/lists" component={withAuth(Lists)} />
+              <Route path="/" component={Home} />
+            </Switch>
           </div>
         </Router>
       </ThemeProvider>

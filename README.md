@@ -1,8 +1,8 @@
-# ionic-checklist
+# react-pwa-checklist
 
 ## Contributing
 
-> **Important**: *never* commit on master. Commit to another branch and make a pull request.
+> **Important**: _never_ commit on master. Commit to another branch and make a pull request.
 > This workflow is described [here](https://gist.github.com/Chaser324/ce0505fbed06b947d962).
 
 Fork the repository and install dependencies on the root folder
@@ -28,5 +28,3 @@ Run client and server applications in different terminals
 **server**
 
 `yarn server:start`
-
-

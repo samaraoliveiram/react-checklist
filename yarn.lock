@@ -916,20 +916,6 @@
   resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.7.3.tgz#6310a047f12d21a1036fb031317219892440416f"
   integrity sha512-4zAPlpDEh2VwXswwr/t8xGNDGg8RQiPxtxZ3qQEXyQsBV39ptTdESCjuBvGze1nLMVrxmTIKmnO/nAV8Tqjjzg==
 
-"@ionic/core@^4.0.2", "@ionic/core@^4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-4.1.2.tgz#cbabd9ae65936f56b1dc6de021cf79778dc991da"
-  integrity sha512-QVJYpDAycmXgQL3mWdvjlIgrLEG0wVl9+NGZQATEBCTEsuDHrOw7BO28FKPlFCdfTjVA6HDJnSj1HwOUi3Yp4w==
-  dependencies:
-    ionicons "4.5.5"
-
-"@ionic/react@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-0.0.5.tgz#7a0bc4531244acd2f1dd0be92c2accb1086136f9"
-  integrity sha512-gaj7/KI3eVlwoEoaX25+9rF1Ik4PUEs1HipnMfY8k3UvhVnbqTGAyfWeVPXsbcbpeiI6iB13vZGSkut8FOKakA==
-  dependencies:
-    "@ionic/core" "^4.0.2"
-
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -5319,11 +5305,6 @@ invert-kv@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
-
-ionicons@4.5.5:
-  version "4.5.5"
-  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-4.5.5.tgz#b059958a54dd45cfa127acc0baf11503b8671e51"
-  integrity sha512-dIGI73XG6Fg2Ps77ry5Ywe36Pq7wUGkDkl0pBhC4uhsiyoW+oXe+pplmarXEnKEcB5fmlkRrBOxYYzZaoRiUGw==
 
 ip-regex@^2.1.0:
   version "2.1.0"
